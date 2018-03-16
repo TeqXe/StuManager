@@ -8,7 +8,7 @@ spring:
                 username: root
                 password: jswy123
             second:  
-                url: jdbc:mysql://localhost:3306/
+                url: jdbc:mysql://localhost:3306/crm
                 username: root
                 password: jswy123
             initial-size: 10
