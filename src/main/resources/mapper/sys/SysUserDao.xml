@@ -61,8 +61,7 @@
 	<insert id="save" parameterType="com.crm.modules.sys.entity.SysUserEntity" useGeneratedKeys="true" keyProperty="userId">
 		insert into sys_user
 		(
-			user_id, 
-			username, 
+			username,
 			password,
 			salt,
 			email, 
@@ -73,8 +72,7 @@
 		)
 		values
 		(
-			#{userId}, 
-			#{username}, 
+			#{username},
 			#{password},
 			#{salt},
 			#{email}, 
@@ -106,12 +104,12 @@
 	</update>
 	
 	<delete id="deleteBatch">
-		delete from sys_user where user_id in 
+		delete from sys_user where user_id in
 		<foreach item="userId" collection="array" open="(" separator="," close=")">
 			#{userId}
 		</foreach>
 		;
-		delete from sys_user_role where user_id in 
+ 		delete from sys_user_role where user_id in
 		<foreach item="userId" collection="array" open="(" separator="," close=")">
 			#{userId}
 		</foreach>
