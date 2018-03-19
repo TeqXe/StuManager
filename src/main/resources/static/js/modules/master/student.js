@@ -120,6 +120,8 @@ var vm = new Vue({
 		},
 		getInfo: function(sid){
 			$.get(baseURL + "master/student/info/"+sid, function(r){
+				//格式化  xxxx-xx-xx 00:00:00 为 xxxx-xx-xx
+				r.student.birth = r.student.birth.substring(0,r.student.birth.lastIndexOf(" ")+1);
                 vm.student = r.student;
             });
 		},
