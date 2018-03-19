@@ -72,13 +72,13 @@ function getSelectedRow() {
     var grid = $("#jqGrid");
     var rowKey = grid.getGridParam("selrow");
     if(!rowKey){
-    	alert("PLACE SELECT ONE ROW");
+    	alert("请选择一行记录");
     	return ;
     }
     
     var selectedIDs = grid.getGridParam("selarrrow");
     if(selectedIDs.length > 1){
-    	alert("ONLY ONE ROW");
+    	alert("仅有一行");
     	return ;
     }
     
@@ -89,7 +89,7 @@ function getSelectedRows() {
     var grid = $("#jqGrid");
     var rowKey = grid.getGridParam("selrow");
     if(!rowKey){
-    	alert("PLACE SELECT ONE ROW");
+    	alert("请选择一行记录");
     	return ;
     }
     

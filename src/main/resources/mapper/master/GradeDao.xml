@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.crm.modules.master.dao.GradeDao">
+
+    <resultMap type="com.crm.modules.master.entity.GradeEntity" id="gradeMap">
+        <result property="gid" column="gid"/>
+        <result property="gname" column="gname"/>
+        <result property="gdesc" column="gdesc"/>
+    </resultMap>
+
+	<select id="queryObject" resultType="com.crm.modules.master.entity.GradeEntity">
+		select * from grade where gid = #{value}
+	</select>
+
+	<select id="queryList" resultType="com.crm.modules.master.entity.GradeEntity">
+		select * from grade
+        <choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
+			<otherwise>
+                order by gid desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="queryTotal" resultType="int">
+		select count(*) from grade 
+	</select>
+	 
+	<insert id="save" parameterType="com.crm.modules.master.entity.GradeEntity">
+		insert into grade
+		(
+			`gid`, 
+			`gname`, 
+			`gdesc`
+		)
+		values
+		(
+			#{gid}, 
+			#{gname}, 
+			#{gdesc}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.crm.modules.master.entity.GradeEntity">
+		update grade 
+		<set>
+			<if test="gname != null">`gname` = #{gname}, </if>
+			<if test="gdesc != null">`gdesc` = #{gdesc}</if>
+		</set>
+		where gid = #{gid}
+	</update>
+	
+	<delete id="delete">
+		delete from grade where gid = #{value}
+	</delete>
+	
+	<delete id="deleteBatch">
+		delete from grade where gid in 
+		<foreach item="gid" collection="array" open="(" separator="," close=")">
+			#{gid}
+		</foreach>
+	</delete>
+
+</mapper>

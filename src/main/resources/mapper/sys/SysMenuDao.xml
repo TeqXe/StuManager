@@ -10,8 +10,7 @@
 	<insert id="save" parameterType="com.crm.modules.sys.entity.SysMenuEntity">
 		insert into sys_menu
 		(
-			menu_id, 
-			parent_id, 
+			parent_id,
 			name, 
 			url, 
 			perms, 
@@ -21,8 +20,7 @@
 		)
 		values
 		(
-			#{menuId}, 
-			#{parentId}, 
+			#{parentId},
 			#{name}, 
 			#{url}, 
 			#{perms}, 

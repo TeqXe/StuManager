@@ -1,16 +1,11 @@
 $(function () {
     $("#jqGrid").jqGrid({
-        url: baseURL + '${moduleName}/${pathName}/list',
+        url: baseURL + 'master/grade/list',
         datatype: "json",
         colModel: [			
-#foreach($column in $columns)
-#if($column.columnName == $pk.columnName)
-			{ label: '${column.attrname}', name: '${column.attrname}', index: '${column.columnName}', width: 50, key: true },
-#else
-			{ label: '${column.comments}', name: '${column.attrname}', index: '${column.columnName}', width: 80 }#if($velocityCount != $columns.size()), #end
-			
-#end			
-#end
+			{ label: '年级ID', name: 'gid', index: 'gid', width: 50, key: true },
+			{ label: '年级', name: 'gname', index: 'gname', width: 80 },
+			{ label: '描述', name: 'gdesc', index: 'gdesc', width: 80 }
         ],
 		viewrecords: true,
         height: 385,
@@ -43,7 +38,7 @@ var vm = new Vue({
 	data:{
 		showList: true,
 		title: null,
-		${classname}: {}
+		grade: {}
 	},
 	methods: {
 		query: function () {
@@ -51,26 +46,26 @@ var vm = new Vue({
 		},
 		add: function(){
 			vm.showList = false;
-			vm.title = "添加";
-			vm.${classname} = {};
+			vm.title = "新增";
+			vm.grade = {};
 		},
 		update: function (event) {
-			var $pk.attrname = getSelectedRow();
-			if($pk.attrname == null){
+			var gid = getSelectedRow();
+			if(gid == null){
 				return ;
 			}
 			vm.showList = false;
             vm.title = "更新";
             
-            vm.getInfo(${pk.attrname})
+            vm.getInfo(gid)
 		},
 		saveOrUpdate: function (event) {
-			var url = vm.${classname}.${pk.attrname} == null ? "${moduleName}/${pathName}/save" : "${moduleName}/${pathName}/update";
+			var url = vm.grade.gid == null ? "master/grade/save" : "master/grade/update";
 			$.ajax({
 				type: "POST",
 			    url: baseURL + url,
                 contentType: "application/json",
-			    data: JSON.stringify(vm.${classname}),
+			    data: JSON.stringify(vm.grade),
 			    success: function(r){
 			    	if(r.code === 0){
 						alert('OK', function(index){
@@ -83,17 +78,17 @@ var vm = new Vue({
 			});
 		},
 		del: function (event) {
-			var ${pk.attrname}s = getSelectedRows();
-			if(${pk.attrname}s == null){
+			var gids = getSelectedRows();
+			if(gids == null){
 				return ;
 			}
 			
 			confirm('你确定吗 ？', function(){
 				$.ajax({
 					type: "POST",
-				    url: baseURL + "${moduleName}/${pathName}/delete",
+				    url: baseURL + "master/grade/delete",
                     contentType: "application/json",
-				    data: JSON.stringify(${pk.attrname}s),
+				    data: JSON.stringify(gids),
 				    success: function(r){
 						if(r.code == 0){
 							alert('OK', function(index){
@@ -106,9 +101,9 @@ var vm = new Vue({
 				});
 			});
 		},
-		getInfo: function(${pk.attrname}){
-			$.get(baseURL + "${moduleName}/${pathName}/info/"+${pk.attrname}, function(r){
-                vm.${classname} = r.${classname};
+		getInfo: function(gid){
+			$.get(baseURL + "master/grade/info/"+gid, function(r){
+                vm.grade = r.grade;
             });
 		},
 		reload: function (event) {

@@ -2,6 +2,23 @@
 <project version="4">
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/crm/modules/master/controller" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/crm/modules/master/controller" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/crm/modules/master/dao" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/crm/modules/master/dao" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/crm/modules/master/entity" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/crm/modules/master/entity" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/crm/modules/master/service" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/crm/modules/master/service" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/mapper.master/master" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/mapper/master/GradeDao.xml" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/mapper/master/StudentDao.xml" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/static/css/bootstrap-datetimepicker.css" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/static/js/modules/master/grade.js" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/static/js/modules/master/student.js" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/static/libs/bootstrap-datetimepicker.js" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/views/modules/master/grade.html" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/views/modules/master/student.html" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/stumanager.sql" charset="GBK" />
   </component>
 </project>
