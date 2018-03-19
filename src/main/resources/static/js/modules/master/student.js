@@ -41,9 +41,10 @@ $(function () {
         }
     });
 
-    $(".form_date:first").datetimepicker({
+    $("#selectDate:first").datetimepicker({
         language: "zh-CN",
         format: 'yyyy-mm-dd',
+        minView: "month",
         autoclose: true,
 		clearBtn:true,
 		todayBtn:true
@@ -77,6 +78,9 @@ var vm = new Vue({
             vm.getInfo(sid)
 		},
 		saveOrUpdate: function (event) {
+		    //console.log( vm.student.birth); 提交前需要拼接日期 否则后台parse xxxx-xx-xx 格式的日期会发生错误
+            vm.student.birth=vm.student.birth+" 00:00:00";
+            //console.log( vm.student.birth);
 			var url = vm.student.sid == null ? "master/student/save" : "master/student/update";
 			$.ajax({
 				type: "POST",
