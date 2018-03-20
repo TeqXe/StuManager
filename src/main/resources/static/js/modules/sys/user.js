@@ -9,8 +9,8 @@ $(function () {
 			{ label: 'mobile', name: 'mobile', width: 100 },
 			{ label: 'status', name: 'status', width: 80, formatter: function(value, options, row){
 				return value === 0 ? 
-					'<span class="label label-danger">danger</span>' : 
-					'<span class="label label-success">success</span>';
+					'<span class="label label-danger">冻结</span>' :
+					'<span class="label label-success">正常</span>';
 			}},
 			{ label: 'createTime', name: 'createTime', index: "create_time", width: 80}
         ],

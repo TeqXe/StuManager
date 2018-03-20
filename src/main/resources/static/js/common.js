@@ -60,7 +60,7 @@ window.alert = function(msg, callback){
 }
 
 window.confirm = function(msg, callback){
-	parent.layer.confirm(msg, {btn: ['OK','CANCLE']},
+	parent.layer.confirm(msg, {btn: ['确定','取消']},
 	function(){
 		if(typeof(callback) === "function"){
 			callback("ok");

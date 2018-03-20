@@ -9,11 +9,12 @@ $(function () {
                     return value === 'M' ?
                         '<span>男</span>' :  '<span>女</span>';
                 }},
-			{ label: '出生日期', name: 'birth', index: 'birth', width: 80 },
+			{ label: '出生日期', name: 'birth', index: 'birth', width: 80, formatter:"date", formatoptions:{srcformat:'Y-m-d H:i:s', newformat:'Y-m-d'}},
 			{ label: '年级', name: 'gid', index: 'gid', width: 80, formatter: function(value, options, row){
                     return value === 10007 ?
                         '<span>七年级</span>' : (value === 10008 ?
-                            '<span>八年级</span>' : '<span>九年级</span>');
+                            '<span>八年级</span>' : (value ===10009 ? '<span>九年级</span>':(value ===10010 ? '<span>十年级</span>':(value ===10011 ?
+                                '<span>十一年级</span>':(value ===10012 ? '<span>十二年级</span>':'<span style="color: red">火星来的？</span>')))));
                 } }
         ],
 		viewrecords: true,
@@ -41,13 +42,13 @@ $(function () {
         }
     });
 
-    $("#selectDate:first").datetimepicker({
+    $(".form_datetime:first").datetimepicker({
         language: "zh-CN",
         format: 'yyyy-mm-dd',
         minView: "month",
         autoclose: true,
 		clearBtn:true,
-		todayBtn:true
+		todayBtn:true,
     });
 });
 
@@ -66,6 +67,15 @@ var vm = new Vue({
 			vm.showList = false;
 			vm.title = "新增";
 			vm.student = {};
+            $.get(baseURL + "master/grade/list/", function(r){
+				var gradeList = r.page.list;
+                //console.log(gradeList);
+				$.each(gradeList,function () {
+                    $("#gradeSelector").append("<option value="+$(this)[0].gid+">"+$(this)[0].gname+"</option>");
+                })
+
+            });
+
 		},
 		update: function (event) {
 			var sid = getSelectedRow();
@@ -78,7 +88,11 @@ var vm = new Vue({
             vm.getInfo(sid)
 		},
 		saveOrUpdate: function (event) {
-		    //console.log( vm.student.birth); 提交前需要拼接日期 否则后台parse xxxx-xx-xx 格式的日期会发生错误
+		    //console.log( vm.student.birth); //提交前需要拼接日期 否则后台parse xxxx-xx-xx 格式的日期会发生错误
+			//console.log($(".form_datetime").val()); vm.student.birth 为undefined 只有重新取值
+			if(vm.student.birth == undefined){
+                vm.student.birth = $(".form_datetime").val();
+			}
             vm.student.birth=vm.student.birth+" 00:00:00";
             //console.log( vm.student.birth);
 			var url = vm.student.sid == null ? "master/student/save" : "master/student/update";
@@ -89,7 +103,7 @@ var vm = new Vue({
 			    data: JSON.stringify(vm.student),
 			    success: function(r){
 			    	if(r.code === 0){
-						alert('OK', function(index){
+						alert(vm.student.sid == null ? '新增成功':'更新成功', function(index){
 							vm.reload();
 						});
 					}else{
@@ -104,7 +118,7 @@ var vm = new Vue({
 				return ;
 			}
 			
-			confirm('你确定吗 ？', function(){
+			confirm('你确定要删除吗 ？', function(){
 				$.ajax({
 					type: "POST",
 				    url: baseURL + "master/student/delete",
@@ -112,7 +126,7 @@ var vm = new Vue({
 				    data: JSON.stringify(sids),
 				    success: function(r){
 						if(r.code == 0){
-							alert('OK', function(index){
+							alert('删除成功', function(index){
 								$("#jqGrid").trigger("reloadGrid");
 							});
 						}else{

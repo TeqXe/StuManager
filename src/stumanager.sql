@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50720
 File Encoding         : 65001
 
-Date: 2018-03-19 17:39:13
+Date: 2018-03-20 13:23:24
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -20,13 +20,14 @@ SET FOREIGN_KEY_CHECKS=0;
 -- ----------------------------
 DROP TABLE IF EXISTS `grade`;
 CREATE TABLE `grade` (
-`gid`  int(11) NOT NULL ,
+`gid`  int(11) NOT NULL AUTO_INCREMENT ,
 `gname`  varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL ,
 `gdesc`  varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL ,
 PRIMARY KEY (`gid`)
 )
 ENGINE=InnoDB
 DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci
+AUTO_INCREMENT=10013
 
 ;
 
@@ -34,7 +35,7 @@ DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci
 -- Records of grade
 -- ----------------------------
 BEGIN;
-INSERT INTO `grade` VALUES ('10007', '七年级', '七年级'), ('10008', '八年级', '八年级'), ('10009', '九年级', '九年级');
+INSERT INTO `grade` VALUES ('10007', '七年级', '七年级(初一)'), ('10008', '八年级', '八年级(初二)'), ('10009', '九年级', '九年级(初三)'), ('10010', '十年级', '十年级(高一)'), ('10011', '十一年级', '十一年级(高二)'), ('10012', '十二年级', '十二年级(高三)');
 COMMIT;
 
 -- ----------------------------
@@ -51,7 +52,7 @@ PRIMARY KEY (`sid`)
 )
 ENGINE=InnoDB
 DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci
-AUTO_INCREMENT=3
+AUTO_INCREMENT=16
 
 ;
 
@@ -59,7 +60,7 @@ AUTO_INCREMENT=3
 -- Records of student
 -- ----------------------------
 BEGIN;
-INSERT INTO `student` VALUES ('1', '张三', 'F', '2005-08-10', '10007'), ('2', '李四', 'M', '2004-05-08', '10008');
+INSERT INTO `student` VALUES ('1', '张三', 'F', '2005-08-10', '10007'), ('2', '李四', 'M', '2004-05-08', '10008'), ('3', '王五', 'M', '2003-03-06', '10007'), ('13', 'yyyy', 'M', '2018-03-14', '10007');
 COMMIT;
 
 -- ----------------------------
@@ -232,13 +233,18 @@ DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci
 -- Records of sys_user_token
 -- ----------------------------
 BEGIN;
-INSERT INTO `sys_user_token` VALUES ('1', '3de7e55796ee1546324d10856e112f6f', '2018-03-20 03:26:31', '2018-03-19 15:26:31'), ('3', '84cde5816320e239ded1ae9d8d280147', '2018-03-13 03:19:28', '2018-03-12 15:19:28');
+INSERT INTO `sys_user_token` VALUES ('1', '0105d93128b13c44184b6551e49f0646', '2018-03-20 21:15:15', '2018-03-20 09:15:15'), ('3', '84cde5816320e239ded1ae9d8d280147', '2018-03-13 03:19:28', '2018-03-12 15:19:28');
 COMMIT;
+
+-- ----------------------------
+-- Auto increment value for grade
+-- ----------------------------
+ALTER TABLE `grade` AUTO_INCREMENT=10013;
 
 -- ----------------------------
 -- Auto increment value for student
 -- ----------------------------
-ALTER TABLE `student` AUTO_INCREMENT=3;
+ALTER TABLE `student` AUTO_INCREMENT=16;
 
 -- ----------------------------
 -- Auto increment value for sys_log

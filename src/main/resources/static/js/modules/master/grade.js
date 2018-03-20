@@ -68,7 +68,7 @@ var vm = new Vue({
 			    data: JSON.stringify(vm.grade),
 			    success: function(r){
 			    	if(r.code === 0){
-						alert('OK', function(index){
+						alert('操作成功', function(index){
 							vm.reload();
 						});
 					}else{
@@ -83,7 +83,7 @@ var vm = new Vue({
 				return ;
 			}
 			
-			confirm('你确定吗 ？', function(){
+			confirm('你确定要删除吗 ？', function(){
 				$.ajax({
 					type: "POST",
 				    url: baseURL + "master/grade/delete",
@@ -91,7 +91,7 @@ var vm = new Vue({
 				    data: JSON.stringify(gids),
 				    success: function(r){
 						if(r.code == 0){
-							alert('OK', function(index){
+							alert('删除成功', function(index){
 								$("#jqGrid").trigger("reloadGrid");
 							});
 						}else{
