@@ -1,6 +1,7 @@
 package com.crm.modules.master.service;
 
 import com.crm.modules.master.entity.StudentEntity;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Map;
@@ -27,4 +28,6 @@ public interface StudentService {
 	void delete(Integer sid);
 	
 	void deleteBatch(Integer[] sids);
+
+	String uploadImg(MultipartFile file);
 }

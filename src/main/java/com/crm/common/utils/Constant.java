@@ -4,6 +4,8 @@ public class Constant {
 
 	public static final int SUPER_ADMIN = 1;
 
+	public static final String imgStorePath = "D:\\eclipse-workspace\\StuManager\\src\\main\\resources\\static\\upload\\";
+
 	public enum MenuType {
 		
 		CATALOG(0),

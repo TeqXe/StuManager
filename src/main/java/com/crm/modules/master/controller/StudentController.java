@@ -16,6 +16,7 @@ import com.crm.modules.master.service.StudentService;
 import com.crm.common.utils.PageUtils;
 import com.crm.common.utils.Query;
 import com.crm.common.utils.R;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * 
@@ -62,6 +63,13 @@ public class StudentController {
 	public R save(@RequestBody StudentEntity student) {
 		studentService.save(student);
 		return R.ok();
+	}
+
+	@RequestMapping("/uploadImg")
+	@RequiresPermissions("master:student:save")
+	public R uploadImg(MultipartFile file){
+		String storePath = studentService.uploadImg(file);
+		return R.ok().put("storePath",storePath);
 	}
 	
 	/**

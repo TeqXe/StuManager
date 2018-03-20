@@ -2,7 +2,7 @@ $(function () {
     $("#jqGrid").jqGrid({
         url: baseURL + 'master/student/list',
         datatype: "json",
-        colModel: [			
+        colModel: [
 			{ label: '学号', name: 'sid', index: 'sid', width: 50, key: true },
 			{ label: '姓名', name: 'sname', index: 'sname', width: 80 },
 			{ label: '性别', name: 'sex', index: 'sex', width: 80, formatter: function(value, options, row){
@@ -21,8 +21,8 @@ $(function () {
         height: 385,
         rowNum: 10,
 		rowList : [10,30,50],
-        rownumbers: true, 
-        rownumWidth: 25, 
+        rownumbers: true,
+        rownumWidth: 25,
         autowidth:true,
         multiselect: true,
         pager: "#jqGridPager",
@@ -33,12 +33,12 @@ $(function () {
             records: "page.totalCount"
         },
         prmNames : {
-            page:"page", 
-            rows:"limit", 
+            page:"page",
+            rows:"limit",
             order: "order"
         },
         gridComplete:function(){
-        	$("#jqGrid").closest(".ui-jqgrid-bdiv").css({ "overflow-x" : "hidden" }); 
+        	$("#jqGrid").closest(".ui-jqgrid-bdiv").css({ "overflow-x" : "hidden" });
         }
     });
 
@@ -70,12 +70,39 @@ var vm = new Vue({
             $.get(baseURL + "master/grade/list/", function(r){
 				var gradeList = r.page.list;
                 //console.log(gradeList);
+                $("#gradeSelector").empty();
 				$.each(gradeList,function () {
                     $("#gradeSelector").append("<option value="+$(this)[0].gid+">"+$(this)[0].gname+"</option>");
                 })
-
             });
 
+		},
+		onUpload:function (e) {
+			console.log("开始上传...");
+			var formData = new FormData();
+			formData.append("file",e.target.files[0]);
+			formData.append("type","png");
+			console.log(formData);
+			$.ajax({
+                url: baseURL+'master/student/uploadImg',
+                type:'post',
+                dataType: 'json',
+                cache: false,
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function(r){
+                    if(r.code === 0){
+                        alert("上传成功", function(){
+							var img_url = r.storePath.replace(/\\/g, "/");
+							console.log(img_url);
+                            $("#picToShow").attr("src","file:///"+img_url);
+                        });
+                    }else{
+                        alert("上传失败");
+                    }
+                }
+            });
 		},
 		update: function (event) {
 			var sid = getSelectedRow();
@@ -84,7 +111,7 @@ var vm = new Vue({
 			}
 			vm.showList = false;
             vm.title = "更新";
-            
+
             vm.getInfo(sid)
 		},
 		saveOrUpdate: function (event) {
@@ -117,7 +144,7 @@ var vm = new Vue({
 			if(sids == null){
 				return ;
 			}
-			
+
 			confirm('你确定要删除吗 ？', function(){
 				$.ajax({
 					type: "POST",
@@ -146,7 +173,7 @@ var vm = new Vue({
 		reload: function (event) {
 			vm.showList = true;
 			var page = $("#jqGrid").jqGrid('getGridParam','page');
-			$("#jqGrid").jqGrid('setGridParam',{ 
+			$("#jqGrid").jqGrid('setGridParam',{
                 page:page
             }).trigger("reloadGrid");
 		}
