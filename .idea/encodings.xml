@@ -1,22 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="Encoding">
+  <component name="Encoding" native2AsciiForPropertiesFiles="true" defaultCharsetForPropertiesFiles="UTF-8">
     <file url="file://$PROJECT_DIR$" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/src/main/java/com/crm/modules/master/controller" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/src/main/java/com/crm/modules/master/dao" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/src/main/java/com/crm/modules/master/entity" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/src/main/java/com/crm/modules/master/service" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/crm/common/utils/Constant.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/crm/modules/master/controller" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/crm/modules/master/dao" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/crm/modules/master/entity" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/crm/modules/master/service" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/crm/modules/master/service/impl/StudentServiceImpl.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/resources/mapper/master/GradeDao.xml" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/src/main/resources/mapper/master/StudentDao.xml" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/src/main/resources/static/css/bootstrap-datetimepicker.css" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/src/main/resources/static/css/style.css" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/src/main/resources/static/js/main.js" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/static/css/bootstrap-datetimepicker.css" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/static/css/style.css" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/static/js/main.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/resources/static/js/modules/master/grade.js" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/src/main/resources/static/js/modules/master/student.js" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/src/main/resources/static/libs/bootstrap-datetimepicker.js" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/src/main/resources/static/scss" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/static/js/modules/master/student.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/static/libs/bootstrap-datetimepicker.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/resources/views/modules/master/grade.html" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/main/resources/views/modules/master/student.html" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/stumanager.sql" charset="GBK" />
+    <file url="PROJECT" charset="UTF-8" />
   </component>
 </project>

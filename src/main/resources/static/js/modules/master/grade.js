@@ -5,7 +5,12 @@ $(function () {
         colModel: [			
 			{ label: '年级ID', name: 'gid', index: 'gid', width: 50, key: true },
 			{ label: '年级', name: 'gname', index: 'gname', width: 80 },
-			{ label: '描述', name: 'gdesc', index: 'gdesc', width: 80 }
+			{ label: '描述', name: 'gdesc', index: 'gdesc', width: 80 },
+            {label: '操作', valign: 'middle', width: 60,
+                formatter: function (value, row, index) {
+                    return '<a class="btn btn-danger" onclick="singleDel(' + row.rowId + ')">删除</a> <a class="btn btn-info" onclick="singleUp(' + row.rowId + ')">更新</a>';
+                }
+            }
         ],
 		viewrecords: true,
         height: 385,
@@ -60,6 +65,9 @@ var vm = new Vue({
             vm.getInfo(gid)
 		},
 		saveOrUpdate: function (event) {
+			if(vm.validator()){
+				return;
+			}
 			var url = vm.grade.gid == null ? "master/grade/save" : "master/grade/update";
 			$.ajax({
 				type: "POST",
@@ -112,6 +120,43 @@ var vm = new Vue({
 			$("#jqGrid").jqGrid('setGridParam',{ 
                 page:page
             }).trigger("reloadGrid");
-		}
+		},
+		validator:function () {
+			if (isBlank(vm.grade.gname)){
+				alert("年级姓名不可为空！");
+				return true;
+			}
+
+			if (isBlank(vm.grade.gdesc)){
+				alert("年级描述不可为空！");
+				return true;
+			}
+        }
 	}
 });
+function singleUp(rowId) {
+    vm.showList = false;
+    vm.title = "更新";
+    vm.getInfo(rowId)
+}
+function singleDel(rowId) {
+	var para = new Array();
+	para[0] = rowId;
+    confirm('你确定要删除吗 ？', function(){
+        $.ajax({
+            type: "POST",
+            url: baseURL + "master/grade/delete",
+            contentType: "application/json",
+            data: JSON.stringify(para),
+            success: function(r){
+                if(r.code == 0){
+                    alert('删除成功', function(index){
+                        $("#jqGrid").trigger("reloadGrid");
+                    });
+                }else{
+                    alert(r.msg);
+                }
+            }
+        });
+    });
+}

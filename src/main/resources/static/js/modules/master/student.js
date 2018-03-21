@@ -15,10 +15,15 @@ $(function () {
                         '<span>七年级</span>' : (value === 10008 ?
                             '<span>八年级</span>' : (value ===10009 ? '<span>九年级</span>':(value ===10010 ? '<span>十年级</span>':(value ===10011 ?
                                 '<span>十一年级</span>':(value ===10012 ? '<span>十二年级</span>':'<span style="color: red">火星来的？</span>')))));
-                } }
+                } },
+            { label: '操作', valign: 'middle', width: 60,
+                formatter: function (value, row, index) {
+                    return '<a class="btn btn-danger" onclick="singleDel('+row.rowId+')">删除</a> <a class="btn btn-info" onclick="singleUp('+row.rowId+')">更新</a>';
+                }
+            }
         ],
 		viewrecords: true,
-        height: 385,
+        height: 585,
         rowNum: 10,
 		rowList : [10,30,50],
         rownumbers: true,
@@ -71,7 +76,10 @@ var vm = new Vue({
 				var gradeList = r.page.list;
                 //console.log(gradeList);
                 $("#gradeSelector").empty();
-				$.each(gradeList,function () {
+				$.each(gradeList,function (index) {
+                    if(index == 0){
+                        $("#gradeSelector").append("<option value="+''+">"+'请选择年级'+"</option>")
+                    }
                     $("#gradeSelector").append("<option value="+$(this)[0].gid+">"+$(this)[0].gname+"</option>");
                 })
             });
@@ -94,12 +102,27 @@ var vm = new Vue({
                 success: function(r){
                     if(r.code === 0){
                         alert("上传成功", function(){
-							var img_url = r.storePath.replace(/\\/g, "/");
+							/*var img_url = r.storePath.replace(/\\/g, "/");
 							console.log(img_url);
-                            $("#picToShow").attr("src","file:///"+img_url);
+                            $("#picToShow").attr("src","file:///"+img_url);*/
+
+                            //回显图片
+                            // for (var i = 0; i < e.target.files.length; i++) {
+                            var file = e.target.files.item(0);
+                            if (!(/^image\/.*$/i.test(file.type))) {
+                                alert("您选择的不是图片，请重新选择！")
+                                return; //不是图片
+                            }
+                            //实例化FileReader
+                            var freader = new FileReader();
+                            freader.readAsDataURL(file);
+                            freader.onload = function(e) {
+                                $("#picToShow").attr("src",e.target.result);
+                            }
+                            // }
                         });
                     }else{
-                        alert("上传失败");
+                        alert("上传失败,请重新选择");
                     }
                 }
             });
@@ -107,14 +130,24 @@ var vm = new Vue({
 		update: function (event) {
 			var sid = getSelectedRow();
 			if(sid == null){
-				return ;
+                return;
 			}
 			vm.showList = false;
             vm.title = "更新";
-
+            $.get(baseURL + "master/grade/list/", function(r){
+                var gradeList = r.page.list;
+                //console.log(gradeList);
+                $("#gradeSelector").empty();
+                $.each(gradeList,function () {
+                    $("#gradeSelector").append("<option value="+$(this)[0].gid+">"+$(this)[0].gname+"</option>");
+                })
+            });
             vm.getInfo(sid)
 		},
 		saveOrUpdate: function (event) {
+            if(!vm.validator()){
+                return ;
+            }
 		    //console.log( vm.student.birth); //提交前需要拼接日期 否则后台parse xxxx-xx-xx 格式的日期会发生错误
 			//console.log($(".form_datetime").val()); vm.student.birth 为undefined 只有重新取值
 			if(vm.student.birth == undefined){
@@ -144,7 +177,6 @@ var vm = new Vue({
 			if(sids == null){
 				return ;
 			}
-
 			confirm('你确定要删除吗 ？', function(){
 				$.ajax({
 					type: "POST",
@@ -164,7 +196,7 @@ var vm = new Vue({
 			});
 		},
 		getInfo: function(sid){
-			$.get(baseURL + "master/student/info/"+sid, function(r){
+			$.get(baseURL + "master/student/info/"+parseInt(sid), function(r){
 				//格式化  xxxx-xx-xx 00:00:00 为 xxxx-xx-xx
 				r.student.birth = r.student.birth.substring(0,r.student.birth.lastIndexOf(" ")+1);
                 vm.student = r.student;
@@ -176,6 +208,63 @@ var vm = new Vue({
 			$("#jqGrid").jqGrid('setGridParam',{
                 page:page
             }).trigger("reloadGrid");
-		}
+		},
+        validator:function () {
+            if (isBlank(vm.student.sname)){
+                alert("学生姓名不可为空");
+                return false;
+            }
+
+            if(isBlank(vm.student.sex)) {
+                alert("性别不可为空！");
+                return false;
+            }
+
+            if(isBlank(vm.student.birth) && $(".form_datetime").val()=="") {
+                alert("出生日期不可为空！");
+                return false;
+            }
+
+            if(isBlank(vm.student.gid)) {
+                alert("年级不可为空！");
+                return false;
+            }
+            return true;
+        }
 	}
 });
+function singleUp(rowId) {
+    vm.showList = false;
+    vm.title = "更新";
+    $.get(baseURL + "master/grade/list/", function(r){
+        var gradeList = r.page.list;
+        //console.log(gradeList);
+        $("#gradeSelector").empty();
+        $.each(gradeList,function () {
+            $("#gradeSelector").append("<option value="+$(this)[0].gid+">"+$(this)[0].gname+"</option>");
+        })
+    });
+    vm.getInfo(rowId)
+}
+
+function singleDel(rowId) {
+	var para = new Array();
+	para[0] = rowId;
+	confirm("你确定要删除吗？",function () {
+		$.ajax({
+            type: "POST",
+            url: baseURL + "master/student/delete",
+            contentType: "application/json",
+            data: JSON.stringify(para),
+            success: function(r){
+                if(r.code == 0){
+                    alert('删除成功', function(index){
+                        $("#jqGrid").trigger("reloadGrid");
+                    });
+                }else{
+                    alert(r.msg);
+                }
+            }
+		})
+    })
+}

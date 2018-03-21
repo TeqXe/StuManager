@@ -15,6 +15,7 @@
     <script src="../../plugins/layer/layer.js"></script>
     <script src="../../libs/bootstrap.min.js"></script>
     <script src="../../libs/vue.min.js"></script>
+    <script src="../../libs/validator.min.js"></script>
     <script src="../../plugins/jqgrid/grid.locale-cn.js"></script>
     <script src="../../plugins/jqgrid/jquery.jqGrid.min.js"></script>
     <script src="../../plugins/ztree/jquery.ztree.all.min.js"></script>
@@ -27,9 +28,9 @@
         <div class="grid-btn">
             <a v-if="hasPermission('master:student:save')" class="btn btn-primary" @click="add"><i
                     class="fa fa-plus"></i>&nbsp;新增</a>
-            <a v-if="hasPermission('master:student:update')" class="btn btn-primary" @click="update"><i
+            <a v-if="hasPermission('master:student:update')" class="btn btn-info" @click="update"><i
                     class="fa fa-pencil-square-o"></i>&nbsp;更新</a>
-            <a v-if="hasPermission('master:student:delete')" class="btn btn-primary" @click="del"><i
+            <a v-if="hasPermission('master:student:delete')" class="btn btn-danger" @click="del"><i
                     class="fa fa-trash-o"></i>&nbsp;删除</a>
         </div>
         <table id="jqGrid" class="table-striped"></table>
@@ -56,23 +57,19 @@
             <div class="form-group">
                 <div class="col-sm-2 control-label">出生日期</div>
                 <div class="col-sm-10 ">
-                    <input type="text" id="" value=""
+                    <input type="text" id="" value="" readonly="readonly"
                            class=" form-control form_datetime"
                             v-model="student.birth"  style="background-color: white;"/>
                 </div>
             </div>
             <div class="form-group">
-                <!--<div class="col-sm-2 control-label">年级</div>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" v-model="student.gid" placeholder=""/>
-                </div>-->
                 <div class="col-sm-2 control-label">年级</div>
                 <div class="col-sm-10">
                     <select id="gradeSelector" class="form-control" v-model="student.gid">
                     </select>
                 </div>
             </div>
-            <div class="form-group">
+            <!--<div class="form-group">
                 <div class="col-sm-2 control-label">照片</div>
                 <div class="col-sm-10 signPutImg">
                     <input type="file" value=""  id="file" name="file"  @change='onUpload'>
@@ -80,7 +77,7 @@
                 <div class="picture" style="width:108px;float:left;">
                     <img src="" style="width:48px;height:48px;float:left;background-size:cover" id="picToShow" />
                 </div>
-            </div>
+            </div>-->
             <div class="form-group">
                 <div class="col-sm-2 control-label"></div>
                 <input type="button" class="btn btn-primary" @click="saveOrUpdate" value="确定"/>

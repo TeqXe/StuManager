@@ -78,7 +78,7 @@ function getSelectedRow() {
     
     var selectedIDs = grid.getGridParam("selarrrow");
     if(selectedIDs.length > 1){
-    	alert("仅有一行");
+    	alert("一次仅可更新一行");
     	return ;
     }
     

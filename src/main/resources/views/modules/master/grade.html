@@ -14,6 +14,7 @@
 <script src="../../plugins/layer/layer.js"></script>
 <script src="../../libs/bootstrap.min.js"></script>
 <script src="../../libs/vue.min.js"></script>
+	<script src="../../libs/validator.min.js"></script>
 <script src="../../plugins/jqgrid/grid.locale-cn.js"></script>
 <script src="../../plugins/jqgrid/jquery.jqGrid.min.js"></script>
 <script src="../../plugins/ztree/jquery.ztree.all.min.js"></script>
@@ -24,10 +25,10 @@
 	<div v-show="showList">
 		<div class="grid-btn">
 			<a v-if="hasPermission('master:grade:save')" class="btn btn-primary" @click="add"><i class="fa fa-plus"></i>&nbsp;新增</a>
-			<a v-if="hasPermission('master:grade:update')" class="btn btn-primary" @click="update"><i class="fa fa-pencil-square-o"></i>&nbsp;更新</a>
-			<a v-if="hasPermission('master:grade:delete')" class="btn btn-primary" @click="del"><i class="fa fa-trash-o"></i>&nbsp;删除</a>
+			<a v-if="hasPermission('master:grade:update')" class="btn btn-info" @click="update"><i class="fa fa-pencil-square-o"></i>&nbsp;更新</a>
+			<a v-if="hasPermission('master:grade:delete')" class="btn btn-danger" @click="del"><i class="fa fa-trash-o"></i>&nbsp;删除</a>
 		</div>
-	    <table id="jqGrid"></table>
+	    <table id="jqGrid" class="table-striped"></table>
 	    <div id="jqGridPager"></div>
     </div>
     

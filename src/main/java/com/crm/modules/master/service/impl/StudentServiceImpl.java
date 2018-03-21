@@ -57,8 +57,9 @@ public class StudentServiceImpl implements StudentService {
 	@Override
 	public String uploadImg(MultipartFile file) {
 		if (!file.isEmpty()) {
-			String storePath =Constant.imgStorePath+file.getOriginalFilename();
+			String storePath = "";
 			try {
+				storePath = Constant.imgStorePath+file.getOriginalFilename();
 				BufferedOutputStream out = new BufferedOutputStream(
 						new FileOutputStream(new File(storePath	)));
 				out.write(file.getBytes());
@@ -66,14 +67,14 @@ public class StudentServiceImpl implements StudentService {
 				out.close();
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();
-				return "上传失败," + e.getMessage();
+				return "error";
 			} catch (IOException e) {
 				e.printStackTrace();
-				return "上传失败," + e.getMessage();
+				return "error,";
 			}
-			return storePath;//返回上传的文件路径
+			return "success";
 		} else {
-			return "上传失败，因为文件是空的.";
+			return "error";
 		}
 	}
 }

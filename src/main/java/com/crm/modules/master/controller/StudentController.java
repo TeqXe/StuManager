@@ -68,8 +68,9 @@ public class StudentController {
 	@RequestMapping("/uploadImg")
 	@RequiresPermissions("master:student:save")
 	public R uploadImg(MultipartFile file){
-		String storePath = studentService.uploadImg(file);
-		return R.ok().put("storePath",storePath);
+		String result = studentService.uploadImg(file);
+		if("success".equals(result)) return R.ok();
+		return R.error();
 	}
 	
 	/**
