@@ -1,4 +1,128 @@
 $(function () {
+    var myChart = echarts.init(document.getElementById('chart'));
+
+    // 指定图表的配置项和数据
+    option = {
+        tooltip : {
+            trigger: 'axis',
+            axisPointer: {
+                type: 'cross',
+                label: {
+                    backgroundColor: '#6a7985'
+                }
+            }
+        },
+        legend: {
+            data:['発電量','消費量','蓄電残量']
+        },
+        toolbox: {
+            feature: {
+                saveAsImage: {}
+            }
+        },
+        grid: {
+            right: '4%',
+            bottom: '3%',
+            containLabel: true
+        },
+        xAxis : [
+            {
+                type : 'category',
+                boundaryGap : false,
+                axisLabel:{
+                    interval:0,
+                    rotate:45,
+                },
+//    	            data : ['周一','周二','周三','周四','周五','周六','周日']
+                data : ['5.00','6.00','7.00','8.00','9.00','10.00','11.00','12.00','13.00','14.00','15.00','16.00','17.00','18.00','19.00','20.00','21.00','22.00','23.00','0.00','1.00','2.00','3.00','4.00',]
+            }
+        ],
+        yAxis : [
+            {
+                type: 'value',
+                min: 0,
+                max: 4,
+                interval: 1,
+                axisLabel: {
+                    formatter: '{value} KWH'
+                }
+            }
+        ]
+       /* series : [
+            {
+                name:'蓄電残量',
+                type:'line',
+                stack: '总量',
+                areaStyle: {normal: {}},
+                data:[0, 0, 0, 0, 0, 0,0, 0, 0, 0, 0, 0,0, 0, 0, 0, 0, 0,0, 0, 0, 0, 0, 0]
+            },
+            {
+                name:'消費量',
+                type:'line',
+                stack: '总量',
+                areaStyle: {normal: {}},
+                data:[1 , 1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+            },
+            {
+                name:'発電量',
+                type:'line',
+                stack: '总量',
+                areaStyle: {normal: {}},
+                data:[2.1, 2.0, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 2, 2, 2, 2, 2, 2, 2, 2, 2]
+            }
+        ]*/
+    };
+
+    // 使用刚指定的配置项和数据显示图表。
+    myChart.setOption(option);
+    loadData();
+    $("#reloadEcharts").on("click",function () {
+		loadData();
+    })
+    function loadData() {
+    	myChart.showLoading({
+			text:'データの読み込み'
+		});
+		$.ajax({
+            type: "POST",
+			async:true,
+            url: baseURL + 'master/student/getEchartsInfo',
+            contentType: "application/json",
+            data: {},
+            success: function(result){
+                if(result.code === 0){
+                    myChart.setOption({
+                        series : [
+                            {
+                                name:'蓄電残量',
+                                type:'line',
+                                stack: '总量',
+                                areaStyle: {normal: {}},
+                                data:result.resultArr1
+                            },
+                            {
+                                name:'消費量',
+                                type:'line',
+                                stack: '总量',
+                                areaStyle: {normal: {}},
+                                data:result.resultArr2
+                            },
+                            {
+                                name:'発電量',
+                                type:'line',
+                                stack: '总量',
+                                areaStyle: {normal: {}},
+                                data:result.resultArr3
+                            }
+                        ]
+					})
+                    myChart.hideLoading();
+                }
+            }
+		})
+
+    }
+
     $("#jqGrid").jqGrid({
         url: baseURL + 'master/student/list',
         datatype: "json",
@@ -105,6 +229,9 @@ var vm = new Vue({
             });
 		},
 		saveOrUpdate: function (event) {
+		    if(vm.validator()){
+		        return;
+            }
 		    //console.log( vm.student.birth); //提交前需要拼接日期 否则后台parse xxxx-xx-xx 格式的日期会发生错误
 			//console.log($(".form_datetime").val()); vm.student.birth 为undefined 只有重新取值
 			if(vm.student.birth == undefined){
@@ -166,7 +293,25 @@ var vm = new Vue({
 			$("#jqGrid").jqGrid('setGridParam',{ 
                 page:page
             }).trigger("reloadGrid");
-		}
+		},
+        validator:function () {
+            if (isBlank(vm.student.sname)){
+                alert("学生姓名不可为空！");
+                return true;
+            }
+            if (isBlank(vm.student.sex)){
+                alert("学生性别不可为空！");
+                return true;
+            }
+            if (isBlank(vm.student.birth) && $(".form_datetime").val() == ""){
+                alert("学生出生日期不可为空！");
+                return true;
+            }
+            if (isBlank(vm.student.gid)){
+                alert("学生年级不可为空！");
+                return true;
+            }
+        }
 	}
 });
 

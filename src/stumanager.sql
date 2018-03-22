@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50720
 File Encoding         : 65001
 
-Date: 2018-03-20 13:23:24
+Date: 2018-03-22 16:03:19
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -27,7 +27,7 @@ PRIMARY KEY (`gid`)
 )
 ENGINE=InnoDB
 DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci
-AUTO_INCREMENT=10013
+AUTO_INCREMENT=10011
 
 ;
 
@@ -35,7 +35,7 @@ AUTO_INCREMENT=10013
 -- Records of grade
 -- ----------------------------
 BEGIN;
-INSERT INTO `grade` VALUES ('10007', '七年级', '七年级(初一)'), ('10008', '八年级', '八年级(初二)'), ('10009', '九年级', '九年级(初三)'), ('10010', '十年级', '十年级(高一)'), ('10011', '十一年级', '十一年级(高二)'), ('10012', '十二年级', '十二年级(高三)');
+INSERT INTO `grade` VALUES ('10007', '七年级', '七年级(初一)'), ('10008', '八年级', '八年级(初二)'), ('10009', '九年级', '九年级(初三)');
 COMMIT;
 
 -- ----------------------------
@@ -52,7 +52,7 @@ PRIMARY KEY (`sid`)
 )
 ENGINE=InnoDB
 DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci
-AUTO_INCREMENT=16
+AUTO_INCREMENT=32
 
 ;
 
@@ -60,7 +60,7 @@ AUTO_INCREMENT=16
 -- Records of student
 -- ----------------------------
 BEGIN;
-INSERT INTO `student` VALUES ('1', '张三', 'F', '2005-08-10', '10007'), ('2', '李四', 'M', '2004-05-08', '10008'), ('3', '王五', 'M', '2003-03-06', '10007'), ('13', 'yyyy', 'M', '2018-03-14', '10007');
+INSERT INTO `student` VALUES ('1', '张三', 'F', '2005-08-10', '10007'), ('2', '李四', 'M', '2004-05-08', '10009'), ('15', 'wer', 'F', '2018-03-21', '10007'), ('16', 'qwe', 'M', '2018-03-06', '10009'), ('17', 'po', 'M', '2018-03-13', '10008'), ('18', 'ui', 'M', '2018-03-14', '10009'), ('19', 'iu', 'M', '2018-03-13', '10009'), ('20', 'ui', 'M', '2018-03-12', '10009'), ('21', 'oi', 'F', '2018-03-13', '10009'), ('24', 'er', 'F', '2018-03-13', '10007'), ('25', 'dfg', 'M', '2018-03-05', '10009'), ('26', '34', 'M', '2018-03-12', '10009'), ('27', 'ty', 'M', '2018-03-12', '10009'), ('28', 'we', 'M', '2018-02-27', '10009'), ('29', 'ui', 'M', '2018-02-26', '10008'), ('30', 'er', 'F', '2018-03-05', '10008'), ('31', 'yyyyyyyy', 'F', '2018-03-06', '10009');
 COMMIT;
 
 -- ----------------------------
@@ -181,7 +181,7 @@ PRIMARY KEY (`user_id`)
 )
 ENGINE=InnoDB
 DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci
-AUTO_INCREMENT=5
+AUTO_INCREMENT=2
 
 ;
 
@@ -233,18 +233,18 @@ DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci
 -- Records of sys_user_token
 -- ----------------------------
 BEGIN;
-INSERT INTO `sys_user_token` VALUES ('1', '0105d93128b13c44184b6551e49f0646', '2018-03-20 21:15:15', '2018-03-20 09:15:15'), ('3', '84cde5816320e239ded1ae9d8d280147', '2018-03-13 03:19:28', '2018-03-12 15:19:28');
+INSERT INTO `sys_user_token` VALUES ('1', 'f05d8c58577c0399681d9b8fd95acca7', '2018-03-23 03:44:34', '2018-03-22 15:44:34'), ('3', '84cde5816320e239ded1ae9d8d280147', '2018-03-13 03:19:28', '2018-03-12 15:19:28');
 COMMIT;
 
 -- ----------------------------
 -- Auto increment value for grade
 -- ----------------------------
-ALTER TABLE `grade` AUTO_INCREMENT=10013;
+ALTER TABLE `grade` AUTO_INCREMENT=10011;
 
 -- ----------------------------
 -- Auto increment value for student
 -- ----------------------------
-ALTER TABLE `student` AUTO_INCREMENT=16;
+ALTER TABLE `student` AUTO_INCREMENT=32;
 
 -- ----------------------------
 -- Auto increment value for sys_log
@@ -259,4 +259,4 @@ ALTER TABLE `sys_menu` AUTO_INCREMENT=41;
 -- ----------------------------
 -- Auto increment value for sys_user
 -- ----------------------------
-ALTER TABLE `sys_user` AUTO_INCREMENT=5;
+ALTER TABLE `sys_user` AUTO_INCREMENT=2;

@@ -64,6 +64,9 @@ var vm = new Vue({
             vm.getInfo(gid)
 		},
 		saveOrUpdate: function (event) {
+			if(!vm.validator()){
+				return;
+			}
 			var url = vm.grade.gid == null ? "master/grade/save" : "master/grade/update";
 			$.ajax({
 				type: "POST",
@@ -116,7 +119,18 @@ var vm = new Vue({
 			$("#jqGrid").jqGrid('setGridParam',{ 
                 page:page
             }).trigger("reloadGrid");
-		}
+		},
+		validator:function () {
+			if (isBlank(vm.grade.gname)){
+				alert("年级名不可为空！");
+				return false;
+			}
+			if (isBlank(vm.grade.gdesc)){
+				alert("年级描述不可为空！");
+				return false;
+			}
+			return true;
+        }
 	}
 });
 

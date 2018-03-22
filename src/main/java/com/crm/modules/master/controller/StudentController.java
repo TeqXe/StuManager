@@ -1,8 +1,11 @@
 package com.crm.modules.master.controller;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import net.sf.json.JSONArray;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -82,5 +85,27 @@ public class StudentController {
 	public R delete(@RequestBody Integer[] sids) {
 		studentService.deleteBatch(sids);
 		return R.ok();
+	}
+
+	@RequestMapping("/getEchartsInfo")
+	public R getInfo(){
+		List<Double> result1 = new ArrayList<Double>();
+		List<Double> result2 = new ArrayList<Double>();
+		List<Double> result3 = new ArrayList<Double>();
+		for (int i=0;i<24;i++){
+			result1.add(new BigDecimal(Math.random()*1).setScale(2,BigDecimal.ROUND_HALF_DOWN).doubleValue());
+			result2.add(new BigDecimal(Math.random()*1).setScale(2,BigDecimal.ROUND_HALF_DOWN).doubleValue());
+			result3.add(new BigDecimal(Math.random()*1).setScale(2,BigDecimal.ROUND_HALF_DOWN).doubleValue());
+		}
+		System.out.println("随机产生的reusltArr1:"+result1);
+		System.out.println("随机产生的reusltArr2:"+result2);
+		System.out.println("随机产生的reusltArr3:"+result3);
+		//延时测试echarts loading
+		try{
+			Thread.sleep(2000);
+		}catch (Exception e){
+
+		}
+		return R.ok().put("resultArr1", JSONArray.fromObject(result1)).put("resultArr2",JSONArray.fromObject(result2)).put("resultArr3",JSONArray.fromObject(result3));
 	}
 }
