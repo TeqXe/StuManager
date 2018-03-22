@@ -198,9 +198,10 @@ var vm = new Vue({
             $.get(baseURL + "master/grade/list/", function(r){
 				var gradeList = r.page.list;
                 //console.log(gradeList);
+                $("#gradeSelector").empty();
 				$.each(gradeList,function (index) {
 					if (index ==0){
-                        $("#gradeSelector").append("<option value="+''+">"+"请选择年级"+"</option>");
+                        $("#gradeSelector").append("<option value="+''+">"+'请选择年级'+"</option>");
 					}
                     $("#gradeSelector").append("<option value="+$(this)[0].gid+">"+$(this)[0].gname+"</option>");
                 })
@@ -219,9 +220,10 @@ var vm = new Vue({
             $.get(baseURL + "master/grade/list/", function(r){
                 var gradeList = r.page.list;
                 //console.log(gradeList);
+                $("#gradeSelector").empty();
                 $.each(gradeList,function (index) {
                     if (index ==0){
-                        $("#gradeSelector").append("<option value="+''+">"+请选择年级+"</option>");
+                        $("#gradeSelector").append("<option value="+''+">"+'请选择年级'+"</option>");
                     }
                     $("#gradeSelector").append("<option value="+$(this)[0].gid+">"+$(this)[0].gname+"</option>");
                 })
@@ -316,10 +318,21 @@ var vm = new Vue({
 });
 
 function singleUp(rowId) {
-    console.log(typeof rowId);
     vm.showList = false;
     vm.title = "更新";
     vm.getInfo(rowId);
+    $.get(baseURL + "master/grade/list/", function(r){
+        var gradeList = r.page.list;
+        //console.log(gradeList);
+        $("#gradeSelector").empty();
+        $.each(gradeList,function (index) {
+            if (index ==0){
+                $("#gradeSelector").append("<option value="+''+">"+'请选择年级'+"</option>");
+            }
+            $("#gradeSelector").append("<option value="+$(this)[0].gid+">"+$(this)[0].gname+"</option>");
+        })
+
+    });
 }
 
 function singleDel(rowId) {
