@@ -1,8 +1,11 @@
 package com.crm.modules.master.controller;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import net.sf.json.JSONArray;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -91,5 +94,29 @@ public class StudentController {
 	public R delete(@RequestBody Integer[] sids) {
 		studentService.deleteBatch(sids);
 		return R.ok();
+	}
+
+	@RequestMapping("/getInfo")
+	public R xdcl(){
+		List<Double> result1 = new ArrayList<Double>();
+		List<Double> result2 = new ArrayList<Double>();
+		List<Double> result3 = new ArrayList<Double>();
+		for(int i=0;i<24;i++){
+			result1.add(new BigDecimal(Math.random()*1).setScale(2,BigDecimal.ROUND_DOWN).doubleValue());
+			result2.add(new BigDecimal(Math.random()*1).setScale(2,BigDecimal.ROUND_DOWN).doubleValue());
+			result3.add(new BigDecimal(Math.random()*1).setScale(2,BigDecimal.ROUND_DOWN).doubleValue());
+		}
+		System.out.println("result1随机产生的数据："+result1.size()+" "+result1);
+		System.out.println("result2随机产生的数据："+result1.size()+" "+result2);
+		System.out.println("result3随机产生的数据："+result1.size()+" "+result3);
+		JSONArray resultArr1 = JSONArray.fromObject(result1);
+		JSONArray resultArr2 = JSONArray.fromObject(result2);
+		JSONArray resultArr3 = JSONArray.fromObject(result3);
+		try{
+			Thread.sleep(2000);//模拟前台ajax异步 读取数据loading
+		}catch (Exception e){
+
+		}
+		return R.ok().put("resultArr1",resultArr1).put("resultArr2",resultArr2).put("resultArr3",resultArr3);
 	}
 }
