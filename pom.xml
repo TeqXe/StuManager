@@ -5,7 +5,8 @@
 	<groupId>com.yyg</groupId>
 	<artifactId>StuManager</artifactId>
 	<version>1.0</version>
-	<packaging>jar</packaging>
+	<!--<packaging>jar</packaging>-->
+	<packaging>war</packaging>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -192,6 +193,11 @@
 			<artifactId>velocity</artifactId>
 			<groupId>org.apache.velocity</groupId>
 			<version>${velocity.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-tomcat</artifactId>
+			<scope>provided</scope>
 		</dependency>
 	</dependencies>
 

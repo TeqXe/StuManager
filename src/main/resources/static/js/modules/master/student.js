@@ -15,12 +15,16 @@ $(function () {
                         '<span>七年级</span>' : (value === 10008 ?
                             '<span>八年级</span>' : (value ===10009 ? '<span>九年级</span>':(value ===10010 ? '<span>十年级</span>':(value ===10011 ?
                                 '<span>十一年级</span>':(value ===10012 ? '<span>十二年级</span>':'<span style="color: red">火星来的？</span>')))));
-                } }
+                } },
+            { label:'操作',name:'', width: 80, formatter:
+                    function (value, row, index) {
+                        return '<a class="btn btn-danger" onclick="singleDel('+row.rowId+')">删除</a> <a class="btn btn-info" onclick="singleUp('+row.rowId+')">更新</a>';
+                    }}
         ],
 		viewrecords: true,
-        height: 385,
+        height: 585,
         rowNum: 10,
-		rowList : [10,30,50],
+		rowList : [10,20,30,50],
         rownumbers: true, 
         rownumWidth: 25, 
         autowidth:true,
@@ -70,7 +74,10 @@ var vm = new Vue({
             $.get(baseURL + "master/grade/list/", function(r){
 				var gradeList = r.page.list;
                 //console.log(gradeList);
-				$.each(gradeList,function () {
+				$.each(gradeList,function (index) {
+					if (index ==0){
+                        $("#gradeSelector").append("<option value="+''+">"+"请选择年级"+"</option>");
+					}
                     $("#gradeSelector").append("<option value="+$(this)[0].gid+">"+$(this)[0].gname+"</option>");
                 })
 
@@ -84,8 +91,18 @@ var vm = new Vue({
 			}
 			vm.showList = false;
             vm.title = "更新";
-            
-            vm.getInfo(sid)
+            vm.getInfo(sid);
+            $.get(baseURL + "master/grade/list/", function(r){
+                var gradeList = r.page.list;
+                //console.log(gradeList);
+                $.each(gradeList,function (index) {
+                    if (index ==0){
+                        $("#gradeSelector").append("<option value="+''+">"+请选择年级+"</option>");
+                    }
+                    $("#gradeSelector").append("<option value="+$(this)[0].gid+">"+$(this)[0].gname+"</option>");
+                })
+
+            });
 		},
 		saveOrUpdate: function (event) {
 		    //console.log( vm.student.birth); //提交前需要拼接日期 否则后台parse xxxx-xx-xx 格式的日期会发生错误
@@ -152,3 +169,32 @@ var vm = new Vue({
 		}
 	}
 });
+
+function singleUp(rowId) {
+    console.log(typeof rowId);
+    vm.showList = false;
+    vm.title = "更新";
+    vm.getInfo(rowId);
+}
+
+function singleDel(rowId) {
+    var para = new Array();
+    para[0] = rowId;
+    confirm('你确定要删除吗 ？', function(){
+        $.ajax({
+            type: "POST",
+            url: baseURL + "master/student/delete",
+            contentType: "application/json",
+            data: JSON.stringify(para),
+            success: function(r){
+                if(r.code == 0){
+                    alert('删除成功', function(index){
+                        $("#jqGrid").trigger("reloadGrid");
+                    });
+                }else{
+                    alert(r.msg);
+                }
+            }
+        });
+    });
+}

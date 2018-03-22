@@ -5,10 +5,14 @@ $(function () {
         colModel: [			
 			{ label: '年级ID', name: 'gid', index: 'gid', width: 50, key: true },
 			{ label: '年级', name: 'gname', index: 'gname', width: 80 },
-			{ label: '描述', name: 'gdesc', index: 'gdesc', width: 80 }
+			{ label: '描述', name: 'gdesc', index: 'gdesc', width: 80 },
+            { label:'操作',name:'', width: 80, formatter:
+                    function (value, row, index) {
+                        return '<a class="btn btn-danger" onclick="singleDel('+row.rowId+')">删除</a> <a class="btn btn-info" onclick="singleUp('+row.rowId+')">更新</a>';
+                    }}
         ],
 		viewrecords: true,
-        height: 385,
+        height: 585,
         rowNum: 10,
 		rowList : [10,30,50],
         rownumbers: true, 
@@ -56,7 +60,7 @@ var vm = new Vue({
 			}
 			vm.showList = false;
             vm.title = "更新";
-            
+            console.log(typeof gid);
             vm.getInfo(gid)
 		},
 		saveOrUpdate: function (event) {
@@ -115,3 +119,32 @@ var vm = new Vue({
 		}
 	}
 });
+
+function singleUp(rowId) {
+	console.log(typeof rowId);
+    vm.showList = false;
+    vm.title = "更新";
+    vm.getInfo(rowId);
+}
+
+function singleDel(rowId) {
+	var para = new Array();
+	para[0] = rowId;
+    confirm('你确定要删除吗 ？', function(){
+        $.ajax({
+            type: "POST",
+            url: baseURL + "master/grade/delete",
+            contentType: "application/json",
+            data: JSON.stringify(para),
+            success: function(r){
+                if(r.code == 0){
+                    alert('删除成功', function(index){
+                        $("#jqGrid").trigger("reloadGrid");
+                    });
+                }else{
+                    alert(r.msg);
+                }
+            }
+        });
+    });
+}
