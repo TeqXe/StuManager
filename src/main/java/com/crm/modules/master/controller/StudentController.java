@@ -88,7 +88,7 @@ public class StudentController {
 	}
 
 	@RequestMapping("/getEchartsInfo")
-	public R getInfo(){
+	public R getEchartsInfo(){
 		List<Double> result1 = new ArrayList<Double>();
 		List<Double> result2 = new ArrayList<Double>();
 		List<Double> result3 = new ArrayList<Double>();
